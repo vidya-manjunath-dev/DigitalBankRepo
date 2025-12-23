@@ -1,0 +1,106 @@
+<app-navbar></app-navbar>
+
+<div class="dashboard-container" style="padding: 20px;">
+
+    <!-- Quick Actions (Moved to top for visibility) -->
+    <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+        <button mat-raised-button color="primary" routerLink="/transfer">Transfer Funds</button>
+        <button mat-raised-button color="accent" routerLink="/transactions">View History</button>
+        <button mat-raised-button color="warn" routerLink="/support">Service Requests</button>
+    </div>
+
+    <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+        <!-- Left Column: Accounts List -->
+        <div style="flex: 1; min-width: 300px;">
+            <h2>Your Accounts</h2>
+            <mat-card *ngFor="let acc of accounts" style="margin-bottom: 10px; cursor: pointer;" class="account-card"
+                (click)="loadTransactions(acc.id)">
+                <mat-card-header>
+                    <mat-card-title>{{ acc.accountType }} Account</mat-card-title>
+                    <mat-card-subtitle>{{ acc.accountNumber }}</mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                    <h3 style="color: green; margin-top: 10px;">{{ acc.balance | currency:'INR' }}</h3>
+                    <p>Status: {{ acc.status }}</p>
+                </mat-card-content>
+                <mat-card-actions>
+                    <button mat-button color="primary" (click)="$event.stopPropagation(); openDeposit(acc)">Deposit
+                        Funds</button>
+                    <button mat-button (click)="$event.stopPropagation(); loadTransactions(acc.id)">View Txns</button>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+
+        <!-- Right Column: Transactions & Deposit Overlay -->
+        <div style="flex: 2; min-width: 400px; position: relative;">
+
+            <!-- Deposit Overlay -->
+            <div *ngIf="selectedAccountForDeposit"
+                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.9); display: flex; justify-content: center; align-items: flex-start; z-index: 10; padding-top: 20px;">
+                <mat-card style="width: 300px; box-shadow: 0 4px 20px rgba(0,0,0,0.2);">
+                    <mat-card-header>
+                        <mat-card-title>Deposit Money</mat-card-title>
+                        <mat-card-subtitle>{{ selectedAccountForDeposit.accountType }} - {{
+                            selectedAccountForDeposit.accountNumber }}</mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-card-content style="margin-top: 20px;">
+                        <mat-form-field appearance="outline" style="width: 100%;">
+                            <mat-label>Amount</mat-label>
+                            <input matInput type="number" [(ngModel)]="depositAmount">
+                        </mat-form-field>
+                    </mat-card-content>
+                    <mat-card-actions align="end">
+                        <button mat-button (click)="cancelDeposit()">Cancel</button>
+                        <button mat-raised-button color="primary" (click)="submitDeposit()"
+                            [disabled]="depositAmount <= 0">Deposit</button>
+                    </mat-card-actions>
+                </mat-card>
+            </div>
+
+            <!-- Recent Transactions List (Per Account) -->
+            <h2>Recent Transactions</h2>
+            <mat-card>
+                <mat-card-content>
+                    <table mat-table [dataSource]="selectedAccountTransactions" style="width: 100%;">
+
+                        <ng-container matColumnDef="date">
+                            <th mat-header-cell *matHeaderCellDef> Date </th>
+                            <td mat-cell *matCellDef="let element"> {{element.txnDateTime | date:'short'}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="description">
+                            <th mat-header-cell *matHeaderCellDef> Description </th>
+                            <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="type">
+                            <th mat-header-cell *matHeaderCellDef> Type </th>
+                            <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="amount">
+                            <th mat-header-cell *matHeaderCellDef> Amount </th>
+                            <td mat-cell *matCellDef="let element"
+                                [style.color]="element.type === 'Credit' ? 'green' : 'red'">
+                                {{element.amount | currency:'INR'}}
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="balance">
+                            <th mat-header-cell *matHeaderCellDef> Balance </th>
+                            <td mat-cell *matCellDef="let element"> {{element.balanceAfterTxn | currency:'INR'}}
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+
+                    <div *ngIf="selectedAccountTransactions.length === 0" style="padding: 20px; text-align: center;">
+                        No transactions found for this account.
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>

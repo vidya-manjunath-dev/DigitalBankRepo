@@ -1,0 +1,9 @@
+<mat-toolbar>
+    <span style="font-weight: bold; letter-spacing: 1px;">DigitalBank <span style="color: #ffc107;">Lite</span></span>
+    <span style="flex: 1 1 auto;"></span>
+    <span style="margin-right: 20px; font-size: 14px; opacity: 0.9;">Welcome, {{ userName }}</span>
+    <button mat-raised-button class="profile-btn" routerLink="/profile">
+        <mat-icon>person</mat-icon> My Profile
+    </button>
+    <button mat-flat-button color="warn" (click)="logout()">Logout</button>
+</mat-toolbar>

@@ -1,0 +1,143 @@
+.login-page {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // Midnight Blue / Premium Navy Gradient
+    background: linear-gradient(135deg, #141E30 0%, #243B55 100%);
+}
+
+.login-card {
+    width: 100%;
+    max-width: 420px;
+    padding: 40px 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5); // Slightly stronger shadow
+    background: rgba(255, 255, 255, 1); // Solid white for contrast
+    animation: slideUp 0.6s ease-out;
+
+    .login-header {
+        text-align: center;
+        margin-bottom: 30px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .icon-circle {
+            width: 80px;
+            height: 80px;
+            // Light Blue background for icon
+            background: rgba(33, 150, 243, 0.1);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+
+            .bank-icon {
+                font-size: 40px;
+                height: 40px;
+                width: 40px;
+                // Electric Blue Icon
+                color: #1976D2;
+            }
+        }
+
+        .app-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #333;
+            margin: 0;
+            letter-spacing: 0.5px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-top: 8px;
+            font-size: 14px;
+        }
+    }
+
+    .login-form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        .full-width {
+            width: 100%;
+        }
+
+        .error-message {
+            color: #d32f2f;
+            background: rgba(211, 47, 47, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            justify-content: center;
+            margin-bottom: 10px;
+
+            mat-icon {
+                font-size: 18px;
+                height: 18px;
+                width: 18px;
+            }
+        }
+
+        .login-btn {
+            height: 50px;
+            font-size: 16px;
+            letter-spacing: 1px;
+            font-weight: 600;
+            border-radius: 10px;
+            margin-top: 10px;
+            color: white;
+            // Electric Blue Gradient
+            background: linear-gradient(90deg, #2196F3 0%, #21CBF3 100%);
+            box-shadow: 0 4px 15px rgba(33, 150, 243, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+
+            &:hover:not([disabled]) {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(33, 150, 243, 0.6);
+            }
+        }
+    }
+
+    .login-footer {
+        margin-top: 20px;
+        padding: 0;
+
+        .register-link {
+            width: 100%;
+            text-align: center;
+            color: #666;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+
+            &:hover {
+                color: #1976D2;
+            }
+
+            strong {
+                color: #1976D2;
+            }
+        }
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

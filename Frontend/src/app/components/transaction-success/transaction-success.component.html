@@ -1,0 +1,44 @@
+<app-navbar></app-navbar>
+
+<div class="success-container"
+    style="display: flex; justify-content: center; align-items: center; height: 80vh; padding: 20px;">
+    <mat-card style="width: 500px; text-align: center; padding: 40px;">
+        <mat-icon
+            style="font-size: 80px; height: 80px; width: 80px; color: green; margin-bottom: 20px;">check_circle</mat-icon>
+        <h1 style="color: green; margin-bottom: 30px;">Transaction Successful!</h1>
+
+        <div *ngIf="transactionDetails" style="text-align: left; margin-bottom: 30px; font-size: 16px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                <strong>Transaction Type:</strong>
+                <span>Fund Transfer</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                <strong>Amount:</strong>
+                <span style="font-size: 18px; font-weight: bold;">{{ transactionDetails.amount | currency:'INR'
+                    }}</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                <strong>From Account:</strong>
+                <span>{{ transactionDetails.fromAccount }}</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                <strong>To Account:</strong>
+                <span>{{ transactionDetails.toAccount }}</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                <strong>Date:</strong>
+                <span>{{ transactionDetails.date | date:'medium' }}</span>
+            </div>
+            <div
+                style="display: flex; justify-content: space-between; margin-bottom: 10px; border-top: 1px solid #eee; padding-top: 10px;">
+                <strong>New Balance (Sender):</strong>
+                <span>{{ transactionDetails.newBalance | currency:'INR' }}</span>
+            </div>
+        </div>
+
+        <button mat-raised-button color="primary" (click)="goToDashboard()"
+            style="padding: 10px 30px; font-size: 16px;">
+            Go to Dashboard
+        </button>
+    </mat-card>
+</div>

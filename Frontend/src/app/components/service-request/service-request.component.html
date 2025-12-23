@@ -1,0 +1,61 @@
+<app-navbar></app-navbar>
+
+<div class="support-container" style="padding: 20px; display: flex; gap: 20px; flex-wrap: wrap;">
+
+    <!-- Create Request -->
+    <div style="flex: 1; min-width: 300px;">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Raise Service Request</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <form [formGroup]="requestForm" (ngSubmit)="onSubmit()"
+                    style="display: flex; flex-direction: column; gap: 16px; margin-top: 20px;">
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Title</mat-label>
+                        <input matInput formControlName="title">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Description</mat-label>
+                        <textarea matInput formControlName="description"></textarea>
+                    </mat-form-field>
+
+                    <div *ngIf="successMessage" style="color: green; text-align: center;">{{ successMessage }}</div>
+
+                    <button mat-raised-button color="primary" type="submit"
+                        [disabled]="requestForm.invalid">Submit</button>
+                    <button mat-button type="button" routerLink="/dashboard">Back to Dashboard</button>
+                </form>
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+    <!-- History -->
+    <div style="flex: 1; min-width: 300px;">
+        <h2>My Requests</h2>
+        <table mat-table [dataSource]="requests" class="mat-elevation-z8" style="width: 100%;">
+
+            <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef> Date </th>
+                <td mat-cell *matCellDef="let element"> {{element.createdDate | date:'shortDate'}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="title">
+                <th mat-header-cell *matHeaderCellDef> Title </th>
+                <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef> Status </th>
+                <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <div *ngIf="requests.length === 0" style="padding: 10px;">No requests found.</div>
+    </div>
+
+</div>

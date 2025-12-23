@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ..
+      dockerfile: devops/backend.Dockerfile
+    ports:
+      - "5105:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=db;Database=DigitalBankLiteDb;User Id=sa;Password=YourPassword123!;Encrypt=false;TrustServerCertificate=true;
+
+  frontend:
+    build:
+      context: ..
+      dockerfile: devops/frontend.Dockerfile
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
+
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=YourPassword123!
+    ports:
+      - "1433:1433"

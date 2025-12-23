@@ -1,0 +1,68 @@
+<app-navbar></app-navbar>
+
+<div class="profile-container"
+    style="padding: 20px; display: flex; justify-content: center; align-items: flex-start; min-height: 80vh;">
+    <mat-card style="width: 100%; max-width: 600px; padding: 20px;">
+        <mat-card-header>
+            <div mat-card-avatar>
+                <mat-icon style="font-size: 40px; width: 40px; height: 40px; color: #3f51b5;">account_circle</mat-icon>
+            </div>
+            <mat-card-title>My Profile</mat-card-title>
+            <mat-card-subtitle>Manage your personal information</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content *ngIf="profile" style="margin-top: 20px;">
+            <div class="detail-row"
+                style="display: flex; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px;">
+                <div style="flex: 1; font-weight: bold; color: #666;">Full Name</div>
+                <div style="flex: 2;">{{ profile.name }}</div>
+            </div>
+
+            <div class="detail-row"
+                style="display: flex; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px;">
+                <div style="flex: 1; font-weight: bold; color: #666;">Email Address</div>
+                <div style="flex: 2;">{{ profile.email }}</div>
+            </div>
+
+            <div class="detail-row"
+                style="display: flex; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px;">
+                <div style="flex: 1; font-weight: bold; color: #666;">Phone Number</div>
+                <div style="flex: 2;">{{ profile.phone || 'Not provided' }}</div>
+            </div>
+
+            <div class="detail-row"
+                style="display: flex; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px;">
+                <div style="flex: 1; font-weight: bold; color: #666;">Address</div>
+                <div style="flex: 2;">{{ profile.address || 'Not provided' }}</div>
+            </div>
+
+            <div class="detail-row"
+                style="display: flex; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px;">
+                <div style="flex: 1; font-weight: bold; color: #666;">Account Status</div>
+                <div style="flex: 2;">
+                    <span [style.color]="profile.kycStatus === 'Approved' ? 'green' : 'orange'"
+                        style="font-weight: bold;">
+                        {{ profile.kycStatus }}
+                    </span>
+                </div>
+            </div>
+
+            <div class="detail-row" style="display: flex; margin-bottom: 15px;">
+                <div style="flex: 1; font-weight: bold; color: #666;">Member Since</div>
+                <div style="flex: 2;">{{ profile.createdDate | date:'mediumDate' }}</div>
+            </div>
+        </mat-card-content>
+
+        <mat-card-content *ngIf="loading" style="text-align: center; padding: 40px;">
+            Loading profile...
+        </mat-card-content>
+
+        <mat-card-content *ngIf="error" style="text-align: center; color: red; padding: 40px;">
+            {{ error }}
+        </mat-card-content>
+
+        <mat-card-actions align="end">
+            <button mat-raised-button color="primary" routerLink="/dashboard">Back to Dashboard</button>
+        </mat-card-actions>
+    </mat-card>
+</div>

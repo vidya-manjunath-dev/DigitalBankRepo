@@ -1,0 +1,58 @@
+<app-navbar></app-navbar>
+<div class="transfer-container" style="display: flex; justify-content: center; padding: 20px;">
+    <mat-card style="width: 500px; padding: 20px;">
+        <mat-card-header>
+            <mat-card-title>Transfer Funds</mat-card-title>
+            <mat-card-subtitle>Transfer between your accounts</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <form [formGroup]="transferForm" (ngSubmit)="onSubmit()"
+                style="display: flex; flex-direction: column; gap: 16px; margin-top: 20px;">
+
+                <mat-form-field appearance="outline">
+                    <mat-label>From Account*</mat-label>
+                    <mat-select formControlName="fromAccountId">
+                        <mat-option *ngFor="let acc of accounts" [value]="acc.id">
+                            {{ acc.accountType }} - {{ acc.accountNumber }} ({{ acc.balance | currency:'USD' }})
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="transferForm.get('fromAccountId')?.hasError('required')">From Account is
+                        required</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>To Account*</mat-label>
+                    <mat-select formControlName="toAccountId">
+                        <mat-option *ngFor="let acc of accounts" [value]="acc.id">
+                            {{ acc.accountType }} - {{ acc.accountNumber }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="transferForm.get('toAccountId')?.hasError('required')">To Account is
+                        required</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Amount*</mat-label>
+                    <input matInput formControlName="amount" type="number">
+                    <mat-error *ngIf="transferForm.get('amount')?.hasError('required')">Amount is required</mat-error>
+                    <mat-error *ngIf="transferForm.get('amount')?.hasError('min')">Amount must be greater than
+                        0</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Remarks</mat-label>
+                    <input matInput formControlName="remarks">
+                </mat-form-field>
+
+                <div *ngIf="successMessage" style="color: green; text-align: center;">{{ successMessage }}</div>
+                <div *ngIf="error" style="color: red; text-align: center;">{{ error }}</div>
+
+                <div style="display: flex; gap: 10px;">
+                    <button mat-raised-button color="primary" type="submit" [disabled]="transferForm.invalid"
+                        style="flex: 1;">Transfer</button>
+                    <button mat-button type="button" routerLink="/dashboard">Cancel</button>
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>
